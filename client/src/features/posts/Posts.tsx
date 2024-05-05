@@ -1,5 +1,6 @@
 import { API_URL } from "../../constants";
 import { useState, useEffect } from "react";
+import styles from "../../styles/body.module.css";
 
 export default function Posts(): JSX.Element {
   const [posts, setPosts] = useState<any>([]);
@@ -28,11 +29,19 @@ export default function Posts(): JSX.Element {
     loadPosts();
   }, []);
 
+  if (loading)
+    return (
+      <div className={styles.loading}>
+        <h2>Loading...</h2>
+        <div className={styles.loader}></div>
+      </div>
+    );
+
   return (
     <div>
       {posts.map((post: any) => {
         return (
-          <div key={post.id} className="post-container">
+          <div key={post.id} className={styles.post}>
             <h2>{post.title}</h2>
             <p>{post.body}</p>
           </div>

@@ -1,14 +1,21 @@
-import { useState } from "react";
 import "./App.css";
-import Posts from "./features/posts/Posts";
+import styles from "./styles/hero.module.css";
+import NavBar from "./components/NavBar";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRoutes from "./components/AppRoutes";
 
 function App() {
   return (
-    <div className="app">
-      <h1>Rails Blog</h1>
-      <p>A blog made with react and ruby on rails</p>
-      <Posts />
-    </div>
+    <Router>
+      <div className={styles.header}>
+        <h1 className={styles.header_text}>Rails Blog</h1>
+        <p className={styles.header_text}>
+          A blog made with react and ruby on rails
+        </p>
+        <NavBar />
+      </div>
+      <AppRoutes />
+    </Router>
   );
 }
 
