@@ -44,9 +44,13 @@ export default function Posts(): JSX.Element {
         return (
           <div key={post.id} className={styles.post}>
             <h2>
-              <Link to={`/posts/${post.id}`}> {post.title}</Link>
+              <Link to={`/posts/${post.id}`}>{post.title}</Link>
             </h2>
             <p>{post.body}</p>
+            <div className={styles.post_actions}>
+              <Link to={`/posts/${post.id}/edit`}>Edit</Link>
+              <Link to={`/posts/${post.id}`}>Delete</Link>
+            </div>
           </div>
         );
       })}

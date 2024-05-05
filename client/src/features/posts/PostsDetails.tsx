@@ -40,6 +40,10 @@ export default function PostDetails(): JSX.Element {
     <section className={styles.post}>
       <h2>{post.title}</h2>
       <p>{post.body}</p>
+      <div className={styles.post_actions}>
+        <Link to={`/posts/${post.id}/edit`}>Edit</Link>
+        <Link to={`/posts/${post.id}`}>Delete</Link>
+      </div>
       <Link to="/">Back to Posts</Link>
     </section>
   );

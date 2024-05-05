@@ -25,6 +25,7 @@
 }
 
 .post {
+  position: relative;
   display: flex;
   text-align: center;
   padding-left: 1rem;
@@ -33,7 +34,7 @@
   align-items: center;
   margin-inline: auto;
   margin-bottom: 3rem;
-  padding-bottom: 1.2rem;
+  padding-bottom: 3rem;
   flex-direction: column;
   border-radius: 2rem;
   margin-top: 1.2rem;
@@ -41,8 +42,18 @@
   border: 2px solid pink;
 }
 
+.post_actions {
+  position: absolute;
+  bottom: 5px;
+  right: 2px;
+  width: 10rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .post_form {
-  width: 30rem;
+  width: 20rem;
   margin-top: 2rem;
   margin-inline: auto;
   display: flex;
@@ -78,4 +89,15 @@
 
 .post_form_button {
   align-self: center;
+}
+
+@media only screen and (min-width: 768px) {
+  .post_actions {
+    bottom: 15px;
+    right: 20px;
+  }
+
+  .post_form {
+    width: 30rem;
+  }
 }
