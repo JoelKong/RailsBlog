@@ -5,7 +5,7 @@ import {
   Link,
   NavigateFunction,
 } from "react-router-dom";
-import { API_URL } from "../../constants";
+import { fetchPost, deletePost } from "../../services/postService";
 import styles from "../../styles/body.module.css";
 
 export default function PostDetails(): JSX.Element {
@@ -14,15 +14,11 @@ export default function PostDetails(): JSX.Element {
   const { id } = useParams();
   const navigate: NavigateFunction = useNavigate();
 
+  // Get current post
   async function fetchCurrentPost() {
     try {
-      const response = await fetch(`${API_URL}/posts/${id}`);
-      if (response.ok) {
-        const json = await response.json();
-        setPost(json);
-      } else {
-        throw response;
-      }
+      const response = await fetchPost(id);
+      setPost(response);
     } catch (error) {
       console.log(error);
     } finally {
@@ -31,17 +27,10 @@ export default function PostDetails(): JSX.Element {
   }
 
   // Delete Post
-  async function deletePost() {
+  async function deleteCurrentPost() {
     try {
-      const response = await fetch(`${API_URL}/posts/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        navigate("/");
-      } else {
-        throw response;
-      }
+      await deletePost(post.id);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +54,7 @@ export default function PostDetails(): JSX.Element {
       <p>{post.body}</p>
       <div className={styles.post_actions}>
         <Link to={`/posts/${post.id}/edit`}>Edit</Link>
-        <button onClick={() => deletePost(post.id)}>Delete</button>
+        <button onClick={() => deleteCurrentPost()}>Delete</button>
       </div>
       <Link to="/">Back to Posts</Link>
     </section>

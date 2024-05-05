@@ -1,4 +1,4 @@
-import { API_URL } from "../../constants";
+import { fetchPosts, deletePost } from "../../services/postService";
 import { useState, useEffect } from "react";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import styles from "../../styles/body.module.css";
@@ -6,41 +6,28 @@ import styles from "../../styles/body.module.css";
 export default function Posts(): JSX.Element {
   const [posts, setPosts] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<String>("");
+  const [error, setError] = useState<any>("");
   const navigate: NavigateFunction = useNavigate();
 
   // Fetch posts from backend api in rails
   async function loadPosts() {
     try {
-      const response = await fetch(`${API_URL}/posts`);
-      if (response.ok) {
-        const json = await response.json();
-        setPosts(json);
-      } else {
-        throw response;
-      }
+      const data = await fetchPosts();
+      setPosts(data);
     } catch (error) {
-      setError("An error occured. Please reload the page");
-      console.log(error);
+      setError(error);
     } finally {
       setLoading(false);
     }
   }
 
   // Delete Post
-  async function deletePost(id: number) {
+  async function deleteCurrentPost(id: number) {
     try {
-      const response = await fetch(`${API_URL}/posts/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        setPosts(posts.filter((post: any) => post.id !== id));
-      } else {
-        throw response;
-      }
+      await deletePost(id);
+      setPosts(posts.filter((post: any) => post.id !== id));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -69,7 +56,7 @@ export default function Posts(): JSX.Element {
               <button onClick={() => navigate(`/posts/${post.id}/edit`)}>
                 Edit
               </button>
-              <button onClick={() => deletePost(post.id)}>Delete</button>
+              <button onClick={() => deleteCurrentPost(post.id)}>Delete</button>
             </div>
           </div>
         );
