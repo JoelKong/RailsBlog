@@ -51,6 +51,11 @@ export default function PostDetails(): JSX.Element {
   return (
     <section className={styles.post}>
       <h2>{post.title}</h2>
+      <img
+        src={post.image_url}
+        alt={post.title}
+        className={styles.post_image}
+      />
       <p>{post.body}</p>
       <div className={styles.post_actions}>
         <Link to={`/posts/${post.id}/edit`}>Edit</Link>

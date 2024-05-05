@@ -51,6 +51,13 @@ export default function Posts(): JSX.Element {
             <h2>
               <Link to={`/posts/${post.id}`}>{post.title}</Link>
             </h2>
+            {post.image_url && (
+              <img
+                src={post.image_url}
+                alt={post.title}
+                className={styles.post_image}
+              />
+            )}
             <p>{post.body}</p>
             <div className={styles.post_actions}>
               <button onClick={() => navigate(`/posts/${post.id}/edit`)}>

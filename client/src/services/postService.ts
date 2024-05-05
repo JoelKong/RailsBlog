@@ -24,10 +24,7 @@ async function fetchPost(id: any): Promise<JSON> {
 async function createPost(postData: any) {
   const response = await fetch(`${API_URL}/posts/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(postData),
+    body: postData,
   });
 
   if (response.ok) {

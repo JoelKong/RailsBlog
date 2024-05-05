@@ -6,15 +6,20 @@ import styles from "../../styles/body.module.css";
 export default function PostForm(): JSX.Element {
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
+  const [image, setImage] = useState<string>("");
   const navigate: NavigateFunction = useNavigate();
 
   // Submitting of post data
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const postData = { title, body };
+    // const postData = { title, body, image };
+    const formData = new FormData();
+    formData.append("post[title]", title);
+    formData.append("post[body]", body);
+    formData.append("post[image]", image);
 
     try {
-      const response = await createPost(postData);
+      const response = await createPost(formData);
       navigate(`/posts/${response.id}`);
     } catch (error) {
       console.error(error);
@@ -39,6 +44,16 @@ export default function PostForm(): JSX.Element {
               setTitle(e.target.value)
             }
             required
+          />
+        </div>
+        <div className={styles.post_form_input}>
+          <label htmlFor="image">Image:</label>
+          <input
+            className={styles.post_form_input_box}
+            id="image"
+            type="file"
+            accept="image/*"
+            onChange={(e: any) => setImage(e.target.files[0])}
           />
         </div>
         <div className={styles.post_form_input}>
