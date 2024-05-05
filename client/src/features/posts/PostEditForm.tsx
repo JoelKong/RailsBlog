@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../constants";
+import { fetchPost, updatePost } from "../../services/postService";
 import styles from "../../styles/body.module.css";
 
 export default function PostEditForm(): JSX.Element {
@@ -12,13 +12,8 @@ export default function PostEditForm(): JSX.Element {
   // Fetch current post by id
   async function fetchCurrentPost() {
     try {
-      const response = await fetch(`${API_URL}/posts/${id}`);
-      if (response.ok) {
-        const json = await response.json();
-        setPost(json);
-      } else {
-        throw response;
-      }
+      const json = await fetchPost(id);
+      setPost(json);
     } catch (error) {
       console.log(error);
     } finally {
@@ -26,26 +21,18 @@ export default function PostEditForm(): JSX.Element {
     }
   }
 
-  // Handle Submit
+  // Handle Submit to update form
   async function handleSubmit(e: any) {
     e.preventDefault();
+    const updatedPost = {
+      title: post.title,
+      body: post.body,
+    };
     try {
-      const response = await fetch(`${API_URL}/posts/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title: post.title, body: post.body }),
-      });
-      if (response.ok) {
-        const json = await response.json();
-        console.log(json);
-        navigate(`/posts/${id}`);
-      } else {
-        throw response;
-      }
+      const response = await updatePost(id, updatedPost);
+      navigate(`/posts/${response.id}`);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

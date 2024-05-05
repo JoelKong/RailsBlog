@@ -20,6 +20,40 @@ async function fetchPost(id: any): Promise<JSON> {
   }
 }
 
+// POST/Create Post
+async function createPost(postData: any) {
+  const response = await fetch(`${API_URL}/posts/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(postData),
+  });
+
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error(response.statusText);
+  }
+}
+
+// PUT/Edit Post
+async function updatePost(id: any, postData: any) {
+  const response = await fetch(`${API_URL}/posts/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(postData),
+  });
+
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error(response.statusText);
+  }
+}
+
 // DELETE post
 async function deletePost(id: number) {
   const response = await fetch(`${API_URL}/posts/${id}`, {
@@ -37,4 +71,4 @@ async function deletePost(id: number) {
   return response.json();
 }
 
-export { fetchPosts, fetchPost, deletePost };
+export { createPost, updatePost, fetchPosts, fetchPost, deletePost };

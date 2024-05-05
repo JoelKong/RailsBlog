@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { API_URL } from "../../constants";
+import { createPost } from "../../services/postService";
 import styles from "../../styles/body.module.css";
 
 export default function PostForm(): JSX.Element {
@@ -8,23 +8,16 @@ export default function PostForm(): JSX.Element {
   const [body, setBody] = useState<string>("");
   const navigate: NavigateFunction = useNavigate();
 
+  // Submitting of post data
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const postData = { title, body };
 
-    const response = await fetch(`${API_URL}/posts`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(postData),
-    });
-
-    if (response.ok) {
-      const { id } = await response.json();
-      navigate(`/posts/${id}`);
-    } else {
-      console.log("An error occured");
+    try {
+      const response = await createPost(postData);
+      navigate(`/posts/${response.id}`);
+    } catch (error) {
+      console.error(error);
     }
   }
 
