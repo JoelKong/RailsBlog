@@ -1,5 +1,6 @@
 import { API_URL } from "../../constants";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styles from "../../styles/body.module.css";
 
 export default function Posts(): JSX.Element {
@@ -42,7 +43,9 @@ export default function Posts(): JSX.Element {
       {posts.map((post: any) => {
         return (
           <div key={post.id} className={styles.post}>
-            <h2>{post.title}</h2>
+            <h2>
+              <Link to={`/posts/${post.id}`}> {post.title}</Link>
+            </h2>
             <p>{post.body}</p>
           </div>
         );

@@ -10,7 +10,7 @@ function App() {
       <div className={styles.header}>
         <h1 className={styles.header_text}>Rails Blog</h1>
         <p className={styles.header_text}>
-          A blog made with react and ruby on rails
+          A blog made with react frontend and ruby on rails backend
         </p>
         <NavBar />
       </div>

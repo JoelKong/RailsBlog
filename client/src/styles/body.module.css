@@ -15,8 +15,20 @@
   animation: spin 2s linear infinite;
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .post {
   display: flex;
+  text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
   justify-content: center;
   align-items: center;
   margin-inline: auto;
@@ -29,11 +41,41 @@
   border: 2px solid pink;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.post_form {
+  width: 30rem;
+  margin-top: 2rem;
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  background-color: rgb(85, 85, 124);
+  height: 20rem;
+  letter-spacing: 0.1rem;
+}
+
+.post_form2 {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.post_form_input {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.post_form_input_box {
+  width: 60%;
+  height: 2rem;
+  font-size: large;
+  letter-spacing: 0.1rem;
+}
+
+.post_form_button {
+  align-self: center;
 }
