@@ -1,12 +1,13 @@
 import { API_URL } from "../../constants";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import styles from "../../styles/body.module.css";
 
 export default function Posts(): JSX.Element {
   const [posts, setPosts] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<String>("");
+  const navigate: NavigateFunction = useNavigate();
 
   // Fetch posts from backend api in rails
   async function loadPosts() {
@@ -23,6 +24,23 @@ export default function Posts(): JSX.Element {
       console.log(error);
     } finally {
       setLoading(false);
+    }
+  }
+
+  // Delete Post
+  async function deletePost(id: number) {
+    try {
+      const response = await fetch(`${API_URL}/posts/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setPosts(posts.filter((post: any) => post.id !== id));
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -48,8 +66,10 @@ export default function Posts(): JSX.Element {
             </h2>
             <p>{post.body}</p>
             <div className={styles.post_actions}>
-              <Link to={`/posts/${post.id}/edit`}>Edit</Link>
-              <Link to={`/posts/${post.id}`}>Delete</Link>
+              <button onClick={() => navigate(`/posts/${post.id}/edit`)}>
+                Edit
+              </button>
+              <button onClick={() => deletePost(post.id)}>Delete</button>
             </div>
           </div>
         );

@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import {
+  useParams,
+  useNavigate,
+  Link,
+  NavigateFunction,
+} from "react-router-dom";
 import { API_URL } from "../../constants";
 import styles from "../../styles/body.module.css";
 
@@ -7,6 +12,7 @@ export default function PostDetails(): JSX.Element {
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { id } = useParams();
+  const navigate: NavigateFunction = useNavigate();
 
   async function fetchCurrentPost() {
     try {
@@ -21,6 +27,23 @@ export default function PostDetails(): JSX.Element {
       console.log(error);
     } finally {
       setLoading(false);
+    }
+  }
+
+  // Delete Post
+  async function deletePost() {
+    try {
+      const response = await fetch(`${API_URL}/posts/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        navigate("/");
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -42,7 +65,7 @@ export default function PostDetails(): JSX.Element {
       <p>{post.body}</p>
       <div className={styles.post_actions}>
         <Link to={`/posts/${post.id}/edit`}>Edit</Link>
-        <Link to={`/posts/${post.id}`}>Delete</Link>
+        <button onClick={() => deletePost(post.id)}>Delete</button>
       </div>
       <Link to="/">Back to Posts</Link>
     </section>
