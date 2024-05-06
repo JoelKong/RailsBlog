@@ -1,4 +1,4 @@
-import { API_URL } from "../constants";
+import { API_URL, SEARCH_API_URL } from "../constants";
 
 // GET posts
 async function fetchPosts(): Promise<JSON> {
@@ -65,4 +65,21 @@ async function deletePost(id: number) {
   return response.json();
 }
 
-export { createPost, updatePost, fetchPosts, fetchPost, deletePost };
+async function searchPosts(query: any) {
+  const response = await fetch(`${SEARCH_API_URL}/posts/?q=${query}`);
+
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error(response.statusText);
+  }
+}
+
+export {
+  createPost,
+  updatePost,
+  fetchPosts,
+  fetchPost,
+  deletePost,
+  searchPosts,
+};
