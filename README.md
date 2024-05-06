@@ -1,24 +1,29 @@
-# README
+# Rails Blog
+A simple CRUD blog mainly to practice on ruby on rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![rails](/assets/rails.PNG)
 
-Things you may want to cover:
+## Application Code
+### Technology Stack
+Front-End: ReactJS (TypeScript)  
+Back-End: Ruby on Rails with SqlLite3
 
-* Ruby version
+## View All Posts
+Users can view all their respective blog posts. Can consider adding pagination in the future
 
-* System dependencies
+![view](/assets/view.gif)
 
-* Configuration
+## Create Post with image support
+Users can create a post as well
 
-* Database creation
+![create](/assets/create.gif)
 
-* Database initialization
+## Update Post
+Users can also update a post
 
-* How to run the test suite
+![update](/assets/update.gif)
 
-* Services (job queues, cache servers, search engines, etc.)
+## Delete Post
+Users can also delete a post
 
-* Deployment instructions
-
-* ...
+![delete](/assets/delete.gif)
