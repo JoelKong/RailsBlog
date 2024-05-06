@@ -38,10 +38,7 @@ async function createPost(postData: any) {
 async function updatePost(id: any, postData: any) {
   const response = await fetch(`${API_URL}/posts/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(postData),
+    body: postData,
   });
 
   if (response.ok) {

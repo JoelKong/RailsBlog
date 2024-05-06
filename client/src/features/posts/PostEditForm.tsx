@@ -24,12 +24,17 @@ export default function PostEditForm(): JSX.Element {
   // Handle Submit to update form
   async function handleSubmit(e: any) {
     e.preventDefault();
-    const updatedPost = {
-      title: post.title,
-      body: post.body,
-    };
+    const formData = new FormData();
+    formData.append("post[title]", post.title);
+    formData.append("post[body]", post.body);
+    formData.append("post[image]", post.image);
+
+    // const updatedPost = {
+    //   title: post.title,
+    //   body: post.body,
+    // };
     try {
-      const response = await updatePost(id, updatedPost);
+      const response = await updatePost(id, formData);
       navigate(`/posts/${response.id}`);
     } catch (error) {
       console.error(error);
@@ -66,6 +71,18 @@ export default function PostEditForm(): JSX.Element {
               setPost({ ...post, title: e.target.value })
             }
             required
+          />
+        </div>
+        <div className={styles.post_form_input}>
+          <label htmlFor="image">Image:</label>
+          <input
+            className={styles.post_form_input_box}
+            id="image"
+            type="file"
+            accept="image/*"
+            onChange={(e: any) =>
+              setPost({ ...post, image: e.target.files[0] })
+            }
           />
         </div>
         <div className={styles.post_form_input}>
